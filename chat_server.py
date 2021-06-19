@@ -32,9 +32,10 @@ def new_thread(client, address, client_name):
             print("-- {} has disconnected --".format(client_name))
             break
         print(client_name + ": " + msg)
-        msg_response = str(chatbot.get_response(msg))
-        client.send(bytes(msg_response,'utf-8'))
-        print('chatbot to '+ client_name +': ' + msg_response)
+        if msg.startswith("/bot "):
+            msg_response = str(chatbot.get_response(msg.split('/bot')[1]))
+            client.send(bytes(msg_response,'utf-8'))
+            print('chatbot to '+ client_name +': ' + msg_response)
 
 while True:
     client, client_address = server_socket.accept()

@@ -24,5 +24,6 @@ while True:
     client_socket.send(bytes(data,'utf-8'))
     if(data == "/dc"):
         break
-    data_response = client_socket.recv(256).decode()
-    print('chatbot: '+ data_response)
+    if(data.startswith("/bot")):
+        data_response = client_socket.recv(256).decode()
+        print('chatbot: '+ data_response)
