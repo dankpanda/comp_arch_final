@@ -1,6 +1,8 @@
 import socket
 from threading import Thread
+from os import system
 
+system("")
 address = "localhost"
 port = 10000
 
