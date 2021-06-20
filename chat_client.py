@@ -37,7 +37,7 @@ while True:
     args = data.split()
     if(args[0] in keywords):
         if args[0] == "/help":
-            print("\n/roll    Generates a random number between 0-100")
+            print("\n/roll  Generates a random number between 0-100")
             print("/flip    Flip a coin")
             print("/me      Perform an action in third person")
             print("/dc      Disconnect from the chatroom")
