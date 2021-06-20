@@ -1,5 +1,5 @@
 import socket
-import threading
+from threading import Thread
 
 address = "localhost"
 port = 10000
@@ -19,11 +19,19 @@ while True:
         client_socket.close()
 print("Type \"/dc\" to disconnect")
 
+def receive_message():
+    while True:
+        message = client_socket.recv(256).decode() 
+        print(message)
+
+t = Thread(target=receive_message)
+t.daemon = True
+t.start()
+
 while True:
-    data = input('> ')
+    data = input()
+    print ("\033[A                             \033[A")
+    print('You('+name+'): '+data)
     client_socket.send(bytes(data,'utf-8'))
     if(data == "/dc"):
         break
-    if(data.startswith("/bot")):
-        data_response = client_socket.recv(256).decode()
-        print('chatbot: '+ data_response)
