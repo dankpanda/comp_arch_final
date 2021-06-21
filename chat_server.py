@@ -46,6 +46,18 @@ def new_thread(client, address, client_name):
             print("\033[3m {} \033[0m".format(string))
             broadcast_all("\033[3m {} \033[0m".format(string))
 
+        elif msg.split()[0] == "/w":
+            receiver = msg.split()[1]
+            whisper_msg = msg.split()
+            for i in range(2):
+                whisper_msg.pop(0)
+            whisper_msg = " ".join(whisper_msg)
+            client_msg = "You whisper to "+ receiver +": "+whisper_msg
+            message = client_name + " whisper to You: " + whisper_msg
+            print(client_name + " whisper to " + receiver + ": " + whisper_msg)
+            client.send(bytes(client_msg,'utf-8'))
+            whisper(message,receiver,client)
+
         else:
             message = client_name +': ' + msg
             print(message)
@@ -59,6 +71,19 @@ def broadcast(message, sender):
 def broadcast_all(message):
     for clients in current_clients:
         clients[0].send(bytes(message,'utf-8'))
+
+def whisper(message, receiver, sender):
+    valid_name = False
+    for clients in current_clients:
+        if clients[1]==receiver:
+            valid_name = True
+            clients[0].send(bytes(message,'utf-8'))
+            break
+    if valid_name == False:
+        for clients in current_clients:
+            if clients[0]==sender:
+                clients[0].send(bytes('Username is not found in the chatroom','utf-8'))
+        
 
 while True:
     username_flag = False
