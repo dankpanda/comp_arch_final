@@ -1,7 +1,9 @@
 import socket
 import threading
 import random
+import os
 
+os.system("")
 address = "localhost"
 port = 10000
 current_clients = []
