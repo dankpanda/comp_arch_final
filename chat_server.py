@@ -82,9 +82,8 @@ def whisper(message, receiver, sender):
     if valid_name == False:
         for clients in current_clients:
             if clients[0]==sender:
-                clients[0].send(bytes('Username is not found in the chatroom','utf-8'))
+                clients[0].send(bytes('\033[A                             \033[A\nUsername is not found in the chatroom','utf-8'))
         
-
 while True:
     username_flag = False
     client, client_address = server_socket.accept()
