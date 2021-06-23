@@ -60,10 +60,31 @@ def new_thread(client, address, client_name):
             client.send(bytes(client_msg,'utf-8'))
             whisper(message,receiver,client)
 
+        elif msg.split()[0] == "/change":
+            result = msg.split()
+            result.pop(0)
+            newname = "" 
+            index = -1 
+            for i in result:
+                index += 1
+                newname += i
+                if index + 1 != len(result):
+                    newname += " "
+
+
+            print("-- {} Updated from {} --".format(newname, client_name))
+            broadcast_all("-- {} Updated from {}--".format(newname, client_name))
+            
+            current_clients.remove([client,client_name])
+            current_clients.append([client,newname])
+            client_name = newname
+
+
         else:
             message = client_name +': ' + msg
             print(message)
             broadcast(message,client)
+            
     
 def broadcast(message, sender): 
     for clients in current_clients: 
