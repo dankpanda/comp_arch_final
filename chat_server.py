@@ -2,11 +2,22 @@ import socket
 import threading
 import random
 import os
+from PyDictionary import PyDictionary
 
 os.system("")
 address = "localhost"
 port = 10000
 current_clients = []
+
+
+dictionary = PyDictionary()
+#get random word
+
+#get definition of word
+
+file = open("words.txt", "r", encoding='utf-8')
+words = file.read().split("\n")
+
 
 print('Creating server socket')
 server_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -71,7 +82,6 @@ def new_thread(client, address, client_name):
                 if index + 1 != len(result):
                     newname += " "
 
-
             print("-- {} Updated from {} --".format(newname, client_name))
             broadcast_all("-- {} Updated from {}--".format(newname, client_name))
             
@@ -79,7 +89,9 @@ def new_thread(client, address, client_name):
             current_clients.append([client,newname])
             client_name = newname
 
-
+        elif msg == "/learn":
+            print(define_word())
+            broadcast_all(define_word())
         else:
             message = client_name +': ' + msg
             print(message)
@@ -94,6 +106,7 @@ def broadcast(message, sender):
 def broadcast_all(message):
     for clients in current_clients:
         clients[0].send(bytes(message,'utf-8'))
+        
 
 def whisper(message, receiver, sender):
     valid_name = False
@@ -106,7 +119,48 @@ def whisper(message, receiver, sender):
         for clients in current_clients:
             if clients[0]==sender:
                 clients[0].send(bytes('\033[A                             \033[A\nUsername is not found in the chatroom','utf-8'))
-        
+
+def get_word():
+    valid_word =False
+    while(not valid_word):
+        index = random.randint(0,466551)
+        word = words[index]
+
+        if(word[0].islower() and len(word)>2): 
+            valid_word = True
+            return word
+
+def define_word():
+    valid_word = False
+    while(not valid_word):
+        word = get_word()
+        if(dictionary.meaning(word, disable_errors = True)):
+            print(str(word.upper() + "\n"))
+            defs = dictionary.meaning(word)
+
+            for key, value in defs.items():
+                d = (str(str(key)+": "+str(value).strip("[]\'\"").replace("\'","")))
+
+            syns = dictionary.synonym(word)
+            if syns:
+                s = ""
+                for syn in syns:
+                    s+= syn+", "
+                b = (str("\n" + "Synonyms: "+s[:-2]+"\n"))
+
+            ants = dictionary.antonym(word)
+            if ants:
+                a = ""
+                for ant in ants:
+                    s+= ant+", "
+                c = (str("Antonyms: " +a[:-2]))
+
+            print(broadcast_all(str(d)))     
+            print(broadcast_all(str(b)))   
+            print(broadcast_all(str(c)))  
+            valid_word = True
+    
+
 while True:
     username_flag = False
     client, client_address = server_socket.accept()

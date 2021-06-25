@@ -5,7 +5,7 @@ from os import system
 system("")
 address = "localhost"
 port = 10000
-keywords = ["/dc","/roll","/flip","/me","/change","/help","/w"]
+keywords = ["/dc","/roll","/flip","/me","/change","/learn","/help","/w"]
 
 while True:
     client_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -43,6 +43,7 @@ while True:
             print("/dc      Disconnect from the chatroom")
             print("/w       Send a private chat to other user")
             print("/change  Change user's current name")
+            print("/learn   Get a random word and detail")
             print("/help    Show list of commands\n")
 
 
@@ -60,6 +61,10 @@ while True:
         
         elif args[0] in ["/roll","/flip"] and len(args) > 1:
             print("Invalid syntax for command {}".format(args[0]))
+            continue
+
+        elif args[0] == "/learn" and len(args) > 1:
+            print("Invalid syntax for command /dc")
             continue
 
         elif args[0] == "/w" and len(args) < 3:
@@ -80,10 +85,7 @@ while True:
                 if index + 1 != len(args):
                     newname += " "
             name = newname
-
- 
- 
-            
+   
     else: 
         print('You('+name+'):'+data)
 
