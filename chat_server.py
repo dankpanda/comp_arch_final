@@ -90,7 +90,6 @@ def new_thread(client, address, client_name):
             client_name = newname
 
         elif msg == "/learn":
-            print(define_word())
             broadcast_all(define_word())
         else:
             message = client_name +': ' + msg
@@ -135,30 +134,24 @@ def define_word():
     while(not valid_word):
         word = get_word()
         if(dictionary.meaning(word, disable_errors = True)):
-            print(str(word.upper() + "\n"))
+            a = (word.upper() + "\n")
             defs = dictionary.meaning(word)
 
             for key, value in defs.items():
-                d = (str(str(key)+": "+str(value).strip("[]\'\"").replace("\'","")))
+                b = (str(key)+": "+str(value).strip("[]\'\"").replace("\'",""))
 
             syns = dictionary.synonym(word)
             if syns:
                 s = ""
                 for syn in syns:
                     s+= syn+", "
-                b = (str("\n" + "Synonyms: "+s[:-2]+"\n"))
+                c = ("\n" + "Synonyms: "+s[:-2]+"\n")
 
-            ants = dictionary.antonym(word)
-            if ants:
-                a = ""
-                for ant in ants:
-                    s+= ant+", "
-                c = (str("Antonyms: " +a[:-2]))
-
-            print(broadcast_all(str(d)))     
-            print(broadcast_all(str(b)))   
-            print(broadcast_all(str(c)))  
             valid_word = True
+    
+    go = a + b + c 
+    print(go)
+    return go 
     
 
 while True:

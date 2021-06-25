@@ -36,13 +36,7 @@ def define_word():
                 for syn in syns:
                     s+= syn+", "
                 print("\n" + "Synonyms: "+s[:-2]+"\n")
-            ants = dictionary.antonym(word)
-            if ants:
-                a = ""
-                for ant in ants:
-                    s+= ant+", "
-                print("Antonyms: " +a[:-2])
-
             valid_word = True
+    
 
 define_word()
