@@ -10,6 +10,10 @@ keywords = ["/dc","/roll","/flip","/me","/change","/learn","/help","/w"]
 while True:
     client_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
     name = input("Enter username > ")
+    if len(name.split()) != 1 :
+        print("Name cannot contain spaces")
+        continue
+
     client_socket.connect((address,port))
     print("\nConnecting to server")
     client_socket.send(bytes(name,'utf-8'))
@@ -71,11 +75,11 @@ while True:
             print("Invalid syntax for command {}".format(args[0]))
             continue
 
-        elif args[0] == "/change" and len(args) == 1:
+        elif args[0] == "/change" and (len(args) == 1 or len(args) > 2):
             print("Invalid syntax for command /change")
             continue
         
-        if args[0] == "/change" and len(args) > 1 :
+        if args[0] == "/change" and len(args) > 1  :
             args.pop(0)
             newname = "" 
             index = -1 

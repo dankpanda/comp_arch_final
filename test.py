@@ -38,5 +38,4 @@ def define_word():
                 print("\n" + "Synonyms: "+s[:-2]+"\n")
             valid_word = True
     
-
 define_word()
