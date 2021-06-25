@@ -25,6 +25,8 @@ py chat_client.py
 7. [OPTIONAL] you can also try to run more chat_client.py on another terminal to ensure the chatting function works
 
 ## Contributors
-Yowen - 2301902390__
-William Lucianto Santoso - 2301890390__
+Yowen - 2301902390
+
+William Lucianto Santoso - 2301890390
+
 Bently Edyson - 2301894590
