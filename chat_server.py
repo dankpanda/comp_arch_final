@@ -117,6 +117,7 @@ def whisper(message, receiver, sender):
     if valid_name == False:
         for clients in current_clients:
             if clients[0]==sender:
+                print("\033[A                             \033[A")
                 clients[0].send(bytes('\033[A                             \033[A\nUsername is not found in the chatroom','utf-8'))
 
 def get_word():

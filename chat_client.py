@@ -13,7 +13,7 @@ while True:
     if len(name.split()) != 1 :
         print("Name cannot contain spaces")
         continue
-
+    name = name.strip()
     client_socket.connect((address,port))
     print("\nConnecting to server")
     client_socket.send(bytes(name,'utf-8'))
@@ -68,7 +68,7 @@ while True:
             continue
 
         elif args[0] == "/learn" and len(args) > 1:
-            print("Invalid syntax for command /dc")
+            print("Invalid syntax for command /learn")
             continue
 
         elif args[0] == "/w" and len(args) < 3:
